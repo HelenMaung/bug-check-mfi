@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mo.dto.MemberRequestDto;
-import com.mo.dto.MemberRespondDto;
-import com.mo.service.MemberService;
+import com.mo.requestdto.MemberRequestDto;
+import com.mo.responddto.MemberRespondDto;
+import com.mo.service.impl.MemberService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

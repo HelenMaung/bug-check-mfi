@@ -25,4 +25,6 @@ public class LoanProductService {
 		
 		return productRepo.findAll();
 	}
+	
+
 }
