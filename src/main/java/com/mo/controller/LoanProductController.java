@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mo.entity.LoanProduct;
-import com.mo.service.LoanProductService;
+import com.mo.service.impl.LoanProductServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 
@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class LoanProductController {
 	
-	private final LoanProductService loanProduct;
+	private final LoanProductServiceImpl loanProduct;
 	
 	@PostMapping
 	public LoanProduct createProduct(@RequestBody LoanProduct product) {

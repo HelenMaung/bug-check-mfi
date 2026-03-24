@@ -5,21 +5,23 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.mo.dto.request.MemberRequestDto;
+import com.mo.dto.respond.MemberRespondDto;
 import com.mo.entity.Member;
 import com.mo.mappers.MemberMapper;
 import com.mo.repository.MemberRepo;
-import com.mo.requestdto.MemberRequestDto;
-import com.mo.responddto.MemberRespondDto;
+import com.mo.service.MemberService;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class MemberService {
+public class MemberServiceImpl implements MemberService {
 
 	private final MemberRepo memberRepo;
-
+	
+	@Override
 	public MemberRespondDto findById(Long id) {
 
 		Member member = memberRepo.findById(id).orElseThrow(EntityNotFoundException::new);

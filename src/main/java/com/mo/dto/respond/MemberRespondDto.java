@@ -1,4 +1,4 @@
-package com.mo.responddto;
+package com.mo.dto.respond;
 
 import java.time.LocalDateTime;
 

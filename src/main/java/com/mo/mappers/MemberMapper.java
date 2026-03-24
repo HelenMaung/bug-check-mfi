@@ -1,8 +1,8 @@
 package com.mo.mappers;
 
+import com.mo.dto.request.MemberRequestDto;
+import com.mo.dto.respond.MemberRespondDto;
 import com.mo.entity.Member;
-import com.mo.requestdto.MemberRequestDto;
-import com.mo.responddto.MemberRespondDto;
 
 public class MemberMapper {
 	

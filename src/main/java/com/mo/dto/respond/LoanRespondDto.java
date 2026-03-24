@@ -1,4 +1,4 @@
-package com.mo.responddto;
+package com.mo.dto.respond;
 
 public class LoanRespondDto {
 

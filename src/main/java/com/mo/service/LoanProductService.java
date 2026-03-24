@@ -2,29 +2,18 @@ package com.mo.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
+import com.mo.dto.request.LoanProductRequestDto;
+import com.mo.dto.respond.LoanProductRespondDto;
 
-import com.mo.entity.LoanProduct;
-import com.mo.repository.LoanProductRepo;
-
-import lombok.RequiredArgsConstructor;
-
-@Service 
-@RequiredArgsConstructor
-public class LoanProductService {
-
-	private final LoanProductRepo productRepo;
+public interface LoanProductService {
 	
-			
-	public LoanProduct createLoanProduct(LoanProduct product) {
-		
-		return productRepo.save(product);
-	}
+	List<LoanProductRespondDto> findAll();
 	
-	public List<LoanProduct> retrieveLoanProduct() {
-		
-		return productRepo.findAll();
-	}
+	LoanProductRespondDto createLoanProduct(LoanProductRequestDto productDto);
 	
-
+	LoanProductRespondDto updateLoanProduct(LoanProductRequestDto updateLoanProduct, Long id );
+	
+	void deleteProduct(Long id);
+	
+	LoanProductRespondDto findById(Long id);
 }

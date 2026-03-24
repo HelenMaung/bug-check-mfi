@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mo.requestdto.MemberRequestDto;
-import com.mo.responddto.MemberRespondDto;
-import com.mo.service.impl.MemberService;
+import com.mo.dto.request.MemberRequestDto;
+import com.mo.dto.respond.MemberRespondDto;
+import com.mo.service.impl.MemberServiceImpl;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/members")
 public class MemberController {
 	
-	private final MemberService memberService;
+	private final MemberServiceImpl memberService;
 	
 	@PostMapping
 	public MemberRespondDto createMember(@Valid @RequestBody MemberRequestDto member) {
