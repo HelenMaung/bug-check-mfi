@@ -2,6 +2,7 @@ package com.mo.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 import com.mo.dto.request.LoanProductRequestDto;
 import com.mo.dto.respond.LoanProductRespondDto;
@@ -14,6 +15,8 @@ public interface LoanProductMapper {
     @Mapping(target = "loans", ignore = true)
     LoanProduct toEntity(LoanProductRequestDto request);
 
-    LoanProductRespondDto toResponse(LoanProduct entity);
+    LoanProductRespondDto toDto(LoanProduct entity);
+
+    void updateEntityFromDto(LoanProductRequestDto dto, @MappingTarget LoanProduct entity);
 
 }

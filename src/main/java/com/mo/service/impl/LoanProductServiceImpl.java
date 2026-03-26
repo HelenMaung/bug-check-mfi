@@ -6,48 +6,58 @@ import org.springframework.stereotype.Service;
 
 import com.mo.dto.request.LoanProductRequestDto;
 import com.mo.dto.respond.LoanProductRespondDto;
+import com.mo.entity.LoanProduct;
+import com.mo.mappers.LoanProductMapper;
 import com.mo.repository.LoanProductRepo;
 import com.mo.service.LoanProductService;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
-@Service 
+@Service
 @RequiredArgsConstructor
-public class LoanProductServiceImpl implements LoanProductService{
+public class LoanProductServiceImpl implements LoanProductService {
 
 	private final LoanProductRepo productRepo;
+	private final LoanProductMapper productMapper;
 
 	@Override
 	public List<LoanProductRespondDto> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return productRepo.findAll().stream().map(productMapper::toDto).toList();
 	}
 
 	@Override
 	public LoanProductRespondDto createLoanProduct(LoanProductRequestDto productDto) {
-		// TODO Auto-generated method stub
-		return null;
+		LoanProduct entity = productMapper.toEntity(productDto);
+        return productMapper.toDto(productRepo.save(entity));		
 	}
 
 	@Override
-	public LoanProductRespondDto updateLoanProduct(LoanProductRequestDto updateLoanProduct, Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public LoanProductRespondDto updateLoanProduct(LoanProductRequestDto updateProduct, Long id) {
+		 LoanProduct existing = productRepo.findById(id)
+	                .orElseThrow(() -> new EntityNotFoundException("LoanProduct not found"));
+
+	        productMapper.updateEntityFromDto(updateProduct, existing);
+
+	        return productMapper.toDto(productRepo.save(existing));
 	}
 
 	@Override
 	public void deleteProduct(Long id) {
-		// TODO Auto-generated method stub
-		
+
+		LoanProduct entity = productRepo.findById(id)
+				.orElseThrow(() -> new EntityNotFoundException("LoanProduct not found"));
+
+		productRepo.delete(entity);
 	}
 
 	@Override
 	public LoanProductRespondDto findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		LoanProduct entity = productRepo.findById(id)
+				.orElseThrow(() -> new EntityNotFoundException("LoanProduct not found"));
+
+		return productMapper.toDto(entity);
 	}
-	
-	
-	
 
 }
