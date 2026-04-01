@@ -40,3 +40,6 @@ logs/
 Thumbs.db
 
 .factorypath
+
+# Docker
+docker-compose.yml

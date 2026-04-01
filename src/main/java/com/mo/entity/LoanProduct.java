@@ -37,7 +37,7 @@ public class LoanProduct {
 	private BigDecimal principal;
 	
 	@NotNull(message = "Interest amount is required!")
-	@DecimalMin(value = "0.0", inclusive = false, message = "Principal must be greater than 0")
+	@DecimalMin(value = "0.0", inclusive = false, message = "Interest must be greater than 0")
 	@DecimalMax(value = "28.0", message = "Rate cannot exceed 28%")
 	@Column(name="annual_rate")
 	private BigDecimal annualRate;

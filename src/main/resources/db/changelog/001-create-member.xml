@@ -6,7 +6,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog
         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-	<changeSet id="001-create-mamber" author="helen">
+	<changeSet id="001-create-member" author="helen">
 
 		<createTable tableName="member">
 			<column name="id" type="BIGINT" autoIncrement="true">
