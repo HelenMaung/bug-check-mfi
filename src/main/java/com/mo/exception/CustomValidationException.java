@@ -1,5 +1,8 @@
 package com.mo.exception;
 
+import lombok.Getter;
+
+@Getter
 public class CustomValidationException extends RuntimeException{
 
     private final String field;
@@ -10,8 +13,5 @@ public class CustomValidationException extends RuntimeException{
         this.field = field;
         this.errorCode = errorCode;
     }
-
-    public String getField() { return field; }
-    public String getErrorCode() { return errorCode; }
 
 }
