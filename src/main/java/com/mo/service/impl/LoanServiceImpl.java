@@ -1,48 +1,81 @@
 package com.mo.service.impl;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.mo.dto.request.LoanRequestDto;
+import com.mo.dto.respond.LoanRespondDto;
 import com.mo.entity.Loan;
 import com.mo.entity.LoanProduct;
 import com.mo.entity.Member;
+import com.mo.mappers.LoanMapper;
 import com.mo.repository.LoanProductRepo;
 import com.mo.repository.LoanRepo;
 import com.mo.repository.MemberRepo;
+import com.mo.service.LoanService;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class LoanServiceImpl {
+public class LoanServiceImpl implements LoanService{
 	
 	private final LoanRepo loanRepo;
 	private final MemberRepo memberRepo;
 	private final LoanProductRepo productRepo;
-
-	public Loan createLoan(Long memberId, Long productId, BigDecimal principal) {
-
-		Member member = memberRepo.findById(memberId).orElseThrow(null);
-		LoanProduct product = productRepo.findById(productId).orElseThrow();
-
-		Loan loan = new Loan();
-		loan.setMember(member);
+	private final LoanMapper loanMapper;
+	
+	@Override
+	public LoanRespondDto createLoan(LoanRequestDto dto) {
+		
+		LoanProduct product = productRepo.findById(dto.getLoanProductId())
+				.orElseThrow(()-> new RuntimeException("Loan product not found"));
+		
+		Member member = memberRepo.findById(dto.getMemberId())
+				.orElseThrow(()-> new RuntimeException("Member not found"));
+		
+		Loan loan = loanMapper.toEntity(dto);
 		loan.setLoanProduct(product);
-		loan.setPrincipal(principal);
-
-		BigDecimal rate = product.getAnnualRate().divide(BigDecimal.valueOf(100));
-
-		BigDecimal time = BigDecimal.valueOf(product.getMonths()).divide(BigDecimal.valueOf(12));
-
-		BigDecimal interest = principal.multiply(rate).multiply(time);
-
-		BigDecimal totalRepayment = principal.add(interest);
-
-		loan.setTotalInterest(interest);
-		loan.setTotalRepayment(totalRepayment);
-
-		return loanRepo.save(loan);
+		loan.setMember(member);
+		
+		BigDecimal principal = dto.getPrincipal();
+		BigDecimal rate = dto.getInterestRate();
+		int months = dto.getMonths();
+		
+		BigDecimal totalInterest = principal.multiply(rate)
+				.multiply(BigDecimal.valueOf(months))
+				.divide(BigDecimal.valueOf(100));
+		
+		BigDecimal totalRepayment = principal.add(totalInterest);
+		
+        BigDecimal emi = totalRepayment.divide(BigDecimal.valueOf(months));
+        
+        loan.setTotalInterest(totalInterest);
+        loan.setTotalRepayment(totalRepayment);
+        loan.setEmiAmount(emi);
+        Loan saveLoan = loanRepo.save(loan);
+        
+		return loanMapper.toDto(saveLoan);
 	}
+	@Override
+	public LoanRespondDto getLoanById(Long id) {
+		
+		Loan loan = loanRepo.findById(id).orElseThrow(()->new RuntimeException("Loan not found!"));
+		return loanMapper.toDto(loan);
+	}
+	@Override
+	public List<LoanRespondDto> getAllLoans() {
+		
+		return loanRepo.findAll().stream().map(loanMapper::toDto).toList();
+	}
+	
+	@Override
+	public void deleteLoan(Long id) {
+		loanRepo.deleteById(id);
+	}
+
+	
 
 }

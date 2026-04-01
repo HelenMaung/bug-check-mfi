@@ -23,10 +23,7 @@ public class Loan {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Column(name="product_name", nullable= false)
-	private String name;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "loan_product_id", nullable = false)
 	private LoanProduct loanProduct;

@@ -32,6 +32,9 @@ public class LoanProduct {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@Column(name="product_name", nullable= false)
+	private String name;
+	
 	@NotNull(message = "Principal amount is required!")
 	@DecimalMin(value = "0.0", inclusive = false, message = "Principal must be greater than 0")
 	private BigDecimal principal;
