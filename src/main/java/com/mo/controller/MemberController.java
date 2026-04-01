@@ -43,7 +43,7 @@ public class MemberController {
 	}
 	
 	@PutMapping("/{id}")
-	public MemberRespondDto updateData(@RequestBody MemberRequestDto member, @PathVariable Long id) {
+	public MemberRespondDto updateData(@Valid @RequestBody MemberRequestDto member, @PathVariable Long id) {
 		return memberService.updateMemberData(member,id);
 	}
 	
