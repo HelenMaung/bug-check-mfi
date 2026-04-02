@@ -1,8 +1,10 @@
 package com.mo.service.impl;
 
 import java.math.BigDecimal;
-import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.mo.dto.request.LoanRequestDto;
@@ -65,17 +67,28 @@ public class LoanServiceImpl implements LoanService{
 		Loan loan = loanRepo.findById(id).orElseThrow(()->new RuntimeException("Loan not found!"));
 		return loanMapper.toDto(loan);
 	}
-	@Override
-	public List<LoanRespondDto> getAllLoans() {
-		
-		return loanRepo.findAll().stream().map(loanMapper::toDto).toList();
-	}
+//	@Override
+//	public List<LoanRespondDto> getAllLoans() {
+//		
+//		return loanRepo.findAll().stream().map(loanMapper::toDto).toList();
+//	}
 	
 	@Override
 	public void deleteLoan(Long id) {
 		loanRepo.deleteById(id);
 	}
+	
+	@Override
+	public Page<LoanRespondDto> getAllLoans(int page, int size) {
+		
+		Pageable pagable = PageRequest.of(page, size);
+		Page<Loan> entityPages = loanRepo.findAll(pagable);
+		Page<LoanRespondDto> dtoPages = entityPages.map(entity -> loanMapper.toDto(entity));
+		
+		return dtoPages;
+	}
 
+	
 	
 
 }

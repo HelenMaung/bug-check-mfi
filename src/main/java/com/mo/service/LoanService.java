@@ -1,6 +1,6 @@
 package com.mo.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 import com.mo.dto.request.LoanRequestDto;
 import com.mo.dto.respond.LoanRespondDto;
@@ -11,7 +11,11 @@ public interface LoanService {
 	
 	LoanRespondDto getLoanById(Long id);
 	
-	List<LoanRespondDto> getAllLoans();
+//	List<LoanRespondDto> getAllLoans();
 	
 	void deleteLoan(Long id);
+	
+	Page<LoanRespondDto> getAllLoans(int page, int size);
+	
+	
 }

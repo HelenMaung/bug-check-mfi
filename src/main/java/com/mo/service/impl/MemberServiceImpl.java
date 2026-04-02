@@ -3,6 +3,9 @@ package com.mo.service.impl;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.mo.dto.request.MemberRequestDto;
@@ -72,20 +75,13 @@ public class MemberServiceImpl implements MemberService {
 		memberRepo.deleteById(id);
 	}
 
-//	private void validateUniquenes(MemberRequestDto newMember, MemberRespondDto existingMember) {
-//
-//		if (existingMember == null || !existingMember.getPhone().equals(newMember.getPhone())) {
-//			if (memberRepo.existsByPhone(newMember.getPhone())) {
-//				throw new IllegalArgumentException("Phone already exists" + newMember.getPhone());
-//
-//			}
-//		}
-//
-//		if (existingMember == null || !existingMember.getNrc().equals(newMember.getNrc())) {
-//			if (memberRepo.existsByNrc(newMember.getNrc())) {
-//				throw new IllegalArgumentException("NRC already exists: " + newMember.getNrc());
-//			}
-//		}
-//
-//	}
+	@Override
+	public Page<MemberRespondDto> getAllMember(int page, int size) {
+		Pageable pageable = PageRequest.of(page, size);
+		Page<Member> entityPages = memberRepo.findAll(pageable);
+		Page<MemberRespondDto> dtoPages = entityPages.map(entity -> MemberMapper.toDTO(entity));
+		return dtoPages;
+	}
+
+
 }

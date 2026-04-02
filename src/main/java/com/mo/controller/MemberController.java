@@ -1,8 +1,7 @@
 package com.mo.controller;
 
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mo.dto.request.MemberRequestDto;
@@ -37,10 +37,10 @@ public class MemberController {
 		return memberService.findById(id);
 	}
 	
-	@GetMapping("/list")
-	public List<MemberRespondDto> retrieveMembers() {
-		return memberService.findAll();
-	}
+//	@GetMapping("/list")
+//	public List<MemberRespondDto> retrieveMembers() {
+//		return memberService.findAll();
+//	}
 	
 	@PutMapping("/{id}")
 	public MemberRespondDto updateData(@Valid @RequestBody MemberRequestDto member, @PathVariable Long id) {
@@ -52,6 +52,15 @@ public class MemberController {
 		
 		memberService.deleteMember(id);
 	
+	}
+	
+	@GetMapping
+	public Page<MemberRespondDto> getAllMember(
+			@RequestParam(defaultValue = "0") int page,
+			@RequestParam(defaultValue = "10") int size){
+		
+		
+		return memberService.getAllMember(page, size);
 	}
 
 	

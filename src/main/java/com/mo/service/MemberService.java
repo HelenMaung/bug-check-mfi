@@ -1,6 +1,6 @@
 package com.mo.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 import com.mo.dto.request.MemberRequestDto;
 import com.mo.dto.respond.MemberRespondDto;
@@ -11,9 +11,11 @@ public interface MemberService {
 		
 		MemberRespondDto createMember(MemberRequestDto memberDto);
 		
-		List<MemberRespondDto> findAll();
+//		List<MemberRespondDto> findAll();
 		
 		MemberRespondDto updateMemberData(MemberRequestDto updateMember, Long id);
 		
 		void deleteMember(Long id);
+		
+		Page<MemberRespondDto> getAllMember(int page, int size);
 }
