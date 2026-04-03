@@ -57,7 +57,7 @@ public class MemberController {
 	@GetMapping
 	public Page<MemberRespondDto> getAllMember(
 			@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "10") int size){
+			@RequestParam(defaultValue = "3") int size){
 		
 		
 		return memberService.getAllMember(page, size);
